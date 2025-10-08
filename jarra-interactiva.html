@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jarra Interactiva - Guía de Hidratación</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        body {
+            background-color: #f0f7f0;
+            color: #2c3e50;
+            padding: 20px;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        h1 {
+            color: #2196F3;
+            margin-bottom: 10px;
+        }
+        .btn {
+            display: inline-block;
+            padding: 12px 25px;
+            background-color: #2196F3;
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            margin: 10px 5px;
+        }
+        .btn:hover {
+            background-color: #1976D2;
+            transform: translateY(-2px);
+        }
+        .main-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+        .jar-visual {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            text-align: center;
+        }
+        .info-panel {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        }
+        
+        /* Estilos para la jarra visual */
+        .jar-graphic {
+            width: 200px;
+            height: 400px;
+            margin: 20px auto;
+            border: 3px solid #2196F3;
+            border-radius: 0 0 100px 100px;
+            position: relative;
+            overflow: hidden;
+            background: linear-gradient(to bottom, #E3F2FD, #BBDEFB);
+        }
+        .jar-level {
+            position: absolute;
+            left: 0;
+            right: 0;
+            padding: 8px 0;
+            text-align: center;
+            color: white;
+            font-weight: bold;
+            font-size: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border-bottom: 1px solid rgba(255,255,255,0.3);
+        }
+        .jar-level:hover {
+            transform: scale(1.02);
+            box-shadow: 0 0 10px rgba(0,0,0,0.2);
+        }
+        .level-1 { 
+            bottom: 0; 
+            height: 33%; 
+            background: #2196F3; 
+        }
+        .level-2 { 
+            bottom: 33%; 
+            height: 17%; 
+            background: #4CAF50; 
+        }
+        .level-3 { 
+            bottom: 50%; 
+            height: 13%; 
+            background: #FF9800; 
+        }
+        .level-4 { 
+            bottom: 63%; 
+            height: 12%; 
+            background: #9C27B0; 
+        }
+        .level-5 { 
+            bottom: 75%; 
+            height: 10%; 
+            background: #F44336; 
+        }
+        .level-6 { 
+            bottom: 85%; 
+            height: 15%; 
+            background: #795548; 
+        }
+        
+        .level-info {
+            display: none;
+            padding: 20px;
+            background: #f8fdf8;
+            border-radius: 10px;
+            margin-top: 15px;
+            border-left: 4px solid #2196F3;
+            animation: fadeIn 0.5s ease;
+        }
+        .level-info.active {
+            display: block;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .recommendation {
+            background: #E3F2FD;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+            border-left: 4px solid #2196F3;
+        }
+        
+        .examples {
+            background: #F1F8E9;
+            padding: 12px;
+            border-radius: 6px;
+            margin: 10px 0;
+            font-size: 14px;
+        }
+        
+        @media (max-width: 768px) {
+            .main-content {
+                grid-template-columns: 1fr;
+            }
+            .jar-graphic {
+                width: 150px;
+                height: 300px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Jarra del Buen Beber Interactiva</h1>
+            <p>Haz clic en cada nivel de la jarra para conocer las recomendaciones de consumo</p>
+            <a href="index.html" class="btn">Volver a Inicio</a>
+        </header>
+
+        <div class="main-content">
+            <div class="jar-visual">
+                <h2>Jarra del Buen Beber</h2>
+                <p>Niveles de hidratación recomendados</p>
+                
+                <div class="jar-graphic">
+                    <div class="jar-level level-6" data-level="6">
+                        Nivel 6<br>Evitar
+                    </div>
+                    <div class="jar-level level-5" data-level="5">
+                        Nivel 5<br>½ vaso/día
+                    </div>
+                    <div class="jar-level level-4" data-level="4">
+                        Nivel 4<br>2 vasos/día
+                    </div>
+                    <div class="jar-level level-3" data-level="3">
+                        Nivel 3<br>4 tazas/día
+                    </div>
+                    <div class="jar-level level-2" data-level="2">
+                        Nivel 2<br>2 vasos/día
+                    </div>
+                    <div class="jar-level level-1" data-level="1">
+                        Nivel 1<br>6-8 vasos/día
+                    </div>
+                </div>
+                
+                <div class="jar-legend">
+                    <p><strong>💧 Niveles de la Jarra:</strong></p>
+                    <p>• <span style="color: #2196F3;">Nivel 1:</span> Agua Potable</p>
+                    <p>• <span style="color: #4CAF50;">Nivel 2:</span> Leche y Bebidas de Soya</p>
+                    <p>• <span style="color: #FF9800;">Nivel 3:</span> Café y Té</p>
+                    <p>• <span style="color: #9C27B0;">Nivel 4:</span> Bebidas no Calóricas</p>
+                    <p>• <span style="color: #F44336;">Nivel 5:</span> Jugos y Bebidas Calóricas</p>
+                    <p>• <span style="color: #795548;">Nivel 6:</span> Refrescos</p>
+                </div>
+            </div>
+
+            <div class="info-panel">
+                <h2>Información del Nivel</h2>
+                <p>Selecciona un nivel de la jarra para ver información detallada.</p>
+                
+                <div id="level-info-1" class="level-info active">
+                    <h3>💧 Nivel 1: Agua Potable</h3>
+                    <div class="recommendation">
+                        <strong>Recomendación:</strong> 6-8 vasos al día (2 litros aproximadamente)
+                    </div>
+                    <p><strong>Importancia:</strong> Hidratación esencial para todas las funciones corporales. No aporta calorías y es vital para la salud.</p>
+                    <p><strong>Beneficios:</strong></p>
+                    <ul>
+                        <li>Regula la temperatura corporal</li>
+                        <li>Transporta nutrientes</li>
+                        <li>Elimina toxinas del cuerpo</li>
+                        <li>Mantiene la piel saludable</li>
+                    </ul>
+                </div>
+                
+                <div id="level-info-2" class="level-info">
+                    <h3>🥛 Nivel 2: Leche semidescremada, descremada y bebidas de soya sin azúcar</h3>
+                    <div class="recommendation">
+                        <strong>Recomendación:</strong> Máximo 2 vasos al día (500 ml)
+                    </div>
+                    <p><strong>Importancia:</strong> Aportan calcio, vitamina D y otros nutrientes esenciales.</p>
+                    <div class="examples">
+                        <strong>Ejemplos:</strong> Leche descremada, bebida de soya sin azúcar, yogur natural
+                    </div>
+                    <p><strong>Recomendado para:</strong> Niños a partir de los 2 años y adultos</p>
+                </div>
+                
+                <div id="level-info-3" class="level-info">
+                    <h3>☕ Nivel 3: Café y té sin azúcar</h3>
+                    <div class="recommendation">
+                        <strong>Recomendación:</strong> Máximo 4 tazas al día
+                    </div>
+                    <p><strong>Importancia:</strong> Ofrecen antioxidantes y beneficios metabólicos.</p>
+                    <div class="examples">
+                        <strong>Ejemplos:</strong> Café negro, té verde, té negro, infusiones herbales
+                    </div>
+                    <p><strong>Precauciones:</strong> Deben tomarse con moderación por su contenido de cafeína. Evitar añadir azúcar.</p>
+                </div>
+                
+                <div id="level-info-4" class="level-info">
+                    <h3>🥤 Nivel 4: Bebidas no calóricas con edulcorantes artificiales</h3>
+                    <div class="recommendation">
+                        <strong>Recomendación:</strong> Máximo 2 vasos al día
+                    </div>
+                    <p><strong>Importancia:</strong> Alternativa para quienes buscan reducir calorías.</p>
+                    <div class="examples">
+                        <strong>Ejemplos:</strong> Refrescos light, aguas saborizadas sin azúcar, bebidas energéticas sin calorías
+                    </div>
+                    <p><strong>Advertencia:</strong> No se recomiendan como bebida habitual por posibles efectos secundarios del consumo prolongado de edulcorantes.</p>
+                </div>
+                
+                <div id="level-info-5" class="level-info">
+                    <h3>🧃 Nivel 5: Jugos de fruta, leche entera, bebidas alcohólicas o deportivas</h3>
+                    <div class="recommendation">
+                        <strong>Recomendación:</strong> Máximo ½ vaso al día (125 ml)
+                    </div>
+                    <p><strong>Importancia:</strong> Su consumo debe ser muy limitado.</p>
+                    <div class="examples">
+                        <strong>Ejemplos:</strong> Jugo de naranja natural, leche entera, cerveza, vino, bebidas deportivas
+                    </div>
+                    <p><strong>Razón:</strong> Contienen alto contenido de azúcares naturales, calorías o alcohol.</p>
+                </div>
+                
+                <div id="level-info-6" class="level-info">
+                    <h3>🚫 Nivel 6: Refrescos y aguas de sabor</h3>
+                    <div class="recommendation">
+                        <strong>Recomendación:</strong> No son recomendables, se deben evitar
+                    </div>
+                    <p><strong>Importancia:</strong> Estas bebidas no proporcionan beneficios nutricionales.</p>
+                    <div class="examples">
+                        <strong>Ejemplos:</strong> Refrescos regulares, aguas frescas con azúcar, bebidas energéticas azucaradas
+                    </div>
+                    <p><strong>Riesgos:</strong> Contribuyen al sobrepeso, obesidad, diabetes tipo 2 y otras enfermedades metabólicas.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Jar level interaction
+        const jarLevels = document.querySelectorAll('.jar-level');
+        const levelInfos = document.querySelectorAll('.level-info');
+        
+        jarLevels.forEach(level => {
+            level.addEventListener('click', () => {
+                // Remove active class from all info panels
+                levelInfos.forEach(info => {
+                    info.classList.remove('active');
+                });
+                
+                // Add active class to selected info panel
+                const levelNumber = level.getAttribute('data-level');
+                const infoPanel = document.getElementById(`level-info-${levelNumber}`);
+                infoPanel.classList.add('active');
+                
+                // Add visual feedback to jar levels
+                jarLevels.forEach(lvl => lvl.style.opacity = '0.7');
+                level.style.opacity = '1';
+                level.style.boxShadow = '0 0 15px rgba(0,0,0,0.3)';
+            });
+        });
+
+        // Initialize first level as active
+        jarLevels[0].style.opacity = '1';
+    </script>
+</body>
+</html>

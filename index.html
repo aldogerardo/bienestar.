@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guía de Alimentación Saludable</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f0f7f0;
+            color: #2c3e50;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            text-align: center;
+            padding: 30px 0;
+            background-color: #4CAF50;
+            color: white;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        .content-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+
+        .info-card {
+            background: white;
+            border-radius: 10px;
+            padding: 25px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .info-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.1);
+        }
+
+        h2 {
+            color: #4CAF50;
+            margin-bottom: 15px;
+            font-size: 1.8rem;
+            border-bottom: 2px solid #e0f2e0;
+            padding-bottom: 8px;
+        }
+
+        h3 {
+            color: #388E3C;
+            margin: 15px 0 10px 0;
+        }
+
+        .food-group, .drink-level {
+            margin-bottom: 15px;
+            padding: 12px;
+            background-color: #f8fdf8;
+            border-left: 4px solid #4CAF50;
+            border-radius: 4px;
+        }
+
+        .interactive-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-top: 25px;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 14px 25px;
+            background-color: #4CAF50;
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: bold;
+            text-align: center;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            font-size: 1.1rem;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .btn:hover {
+            background-color: #388E3C;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 8px rgba(0,0,0,0.15);
+        }
+
+        .btn-plate {
+            background-color: #4CAF50;
+        }
+
+        .btn-jar {
+            background-color: #2196F3;
+        }
+
+        .btn-jar:hover {
+            background-color: #1976D2;
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            margin-top: 40px;
+            color: #7f8c8d;
+            font-size: 0.9rem;
+            border-top: 1px solid #e0e0e0;
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .content-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .btn {
+                padding: 12px 20px;
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Guía de Alimentación Saludable</h1>
+            <p class="subtitle">Plato del Bien Comer y Jarra del Buen Beber</p>
+        </header>
+
+        <div class="content-grid">
+            <section class="info-card">
+                <h2>El Plato del Bien Comer</h2>
+                <p>El Plato del Bien Comer es una guía alimentaria desarrollada en México que representa gráficamente los grupos de alimentos y su proporción recomendada en cada comida.</p>
+                
+                <div class="food-group">
+                    <h3>Frutas y Verduras</h3>
+                    <p>Ricas en vitaminas, minerales, fibra y antioxidantes. Mejoran la digestión y reducen el riesgo de enfermedades crónicas. Deben ocupar la mitad de tu plato.</p>
+                </div>
+                
+                <div class="food-group">
+                    <h3>Cereales, Granos y Tubérculos</h3>
+                    <p>Fuente principal de energía a través de carbohidratos complejos. Proporcionan fibra dietética y vitaminas del complejo B. Deben ocupar un cuarto de tu plato.</p>
+                </div>
+                
+                <div class="food-group">
+                    <h3>Leguminosas y Alimentos de Origen Animal</h3>
+                    <p>Fuentes de proteínas, hierro, zinc y otros minerales esenciales. Las leguminosas son ricas en proteínas vegetales y fibra. Deben ocupar un cuarto de tu plato.</p>
+                </div>
+            </section>
+
+            <section class="info-card">
+                <h2>La Jarra del Buen Beber</h2>
+                <p>Guía que clasifica las bebidas según su valor nutricional e impacto en la salud, promoviendo una hidratación adecuada.</p>
+                
+                <div class="drink-level">
+                    <h3>Nivel 1: Agua Potable</h3>
+                    <p>Bebida indispensable. Se recomienda consumir de 6 a 8 vasos al día. Esencial para todas las funciones corporales.</p>
+                </div>
+                
+                <div class="drink-level">
+                    <h3>Nivel 2: Leche semidescremada y bebidas de soya sin azúcar</h3>
+                    <p>Máximo 2 vasos al día. Para niños a partir de los 2 años. Aportan calcio y vitamina D.</p>
+                </div>
+                
+                <div class="drink-level">
+                    <h3>Nivel 3: Café y té sin azúcar</h3>
+                    <p>Máximo 4 tazas al día. Contienen antioxidantes pero deben consumirse con moderación.</p>
+                </div>
+                
+                <div class="drink-level">
+                    <h3>Nivel 4: Bebidas no calóricas con edulcorantes artificiales</h3>
+                    <p>Máximo 2 vasos al día. No se recomiendan como bebida habitual.</p>
+                </div>
+                
+                <div class="drink-level">
+                    <h3>Nivel 5: Jugos de fruta, leche entera, bebidas alcohólicas o deportivas</h3>
+                    <p>Máximo ½ vaso al día. Contienen alto contenido de azúcares o calorías.</p>
+                </div>
+                
+                <div class="drink-level">
+                    <h3>Nivel 6: Refrescos y aguas de sabor</h3>
+                    <p>No recomendable. Se deben evitar por su alto contenido de azúcar y bajo valor nutricional.</p>
+                </div>
+            </section>
+        </div>
+
+        <div class="interactive-buttons">
+            <a href="plato-interactivo.html" class="btn btn-plate">Ir al Plato Interactivo</a>
+            <a href="jarra-interactiva.html" class="btn btn-jar">Ir a la Jarra Interactiva</a>
+        </div>
+
+        <footer>
+            <p>Información basada en guías oficiales de la Secretaría de Salud y Norma Oficial Mexicana NOM-043-SSA2-2012. Actualizada a octubre 2025.</p>
+        </footer>
+    </div>
+</body>
+</html>

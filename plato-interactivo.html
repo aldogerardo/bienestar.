@@ -1,0 +1,784 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Plato Interactivo - Guía de Alimentación</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        body {
+            background-color: #f0f7f0;
+            color: #2c3e50;
+            padding: 20px;
+        }
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        h1 {
+            color: #4CAF50;
+            margin-bottom: 10px;
+            font-size: 2.5rem;
+        }
+        .btn {
+            display: inline-block;
+            padding: 12px 25px;
+            background-color: #4CAF50;
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            margin: 10px 5px;
+            font-size: 1rem;
+        }
+        .btn:hover {
+            background-color: #388E3C;
+            transform: translateY(-2px);
+        }
+        .btn-reset {
+            background-color: #FF9800;
+        }
+        .btn-reset:hover {
+            background-color: #F57C00;
+        }
+        .main-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+        .plate-visual {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            text-align: center;
+        }
+        .info-panel {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        }
+        
+        /* Estilos para el plato visual - MÁS GRANDE */
+        .plate-graphic {
+            width: 400px;
+            height: 400px;
+            margin: 20px auto;
+            border-radius: 50%;
+            position: relative;
+            overflow: hidden;
+            background: conic-gradient(
+                #FF9800 0deg 180deg,
+                #4CAF50 180deg 270deg,
+                #2196F3 270deg 360deg
+            );
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+            border: 6px solid #795548;
+        }
+        .plate-section {
+            position: absolute;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+            padding: 15px;
+        }
+        .plate-section:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 20px rgba(0,0,0,0.3);
+            z-index: 10;
+        }
+        .section-1 { 
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 50%;
+            background: rgba(255, 152, 0, 0.9);
+            clip-path: polygon(0% 0%, 100% 0%, 50% 100%);
+        }
+        .section-2 { 
+            top: 50%;
+            left: 0;
+            right: 50%;
+            bottom: 0;
+            background: rgba(76, 175, 80, 0.9);
+            clip-path: polygon(0% 0%, 100% 100%, 0% 100%);
+        }
+        .section-3 { 
+            top: 50%;
+            left: 50%;
+            right: 0;
+            bottom: 0;
+            background: rgba(33, 150, 243, 0.9);
+            clip-path: polygon(100% 0%, 0% 100%, 100% 100%);
+        }
+        
+        .section-content {
+            background: rgba(0,0,0,0.7);
+            padding: 20px;
+            border-radius: 12px;
+            max-width: 85%;
+            font-size: 18px;
+        }
+        
+        .food-items {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            margin-top: 20px;
+        }
+        .food-item {
+            padding: 15px;
+            background: #f8fdf8;
+            border: 2px dashed #4CAF50;
+            border-radius: 10px;
+            cursor: move;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+            min-height: 80px;
+        }
+        .food-item:hover {
+            background: #e8f5e8;
+            transform: translateY(-3px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        .food-icon {
+            font-size: 28px;
+        }
+        .food-name {
+            font-size: 14px;
+            font-weight: 600;
+        }
+        
+        /* LISTA DE ALIMENTOS COLOCADOS */
+        .placed-foods-container {
+            background: white;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            margin-top: 20px;
+        }
+        .placed-foods-list {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin-top: 15px;
+        }
+        .section-foods {
+            padding: 15px;
+            border-radius: 10px;
+            min-height: 100px;
+        }
+        .section-foods-1 {
+            background: #FFF3E0;
+            border-left: 4px solid #FF9800;
+        }
+        .section-foods-2 {
+            background: #E8F5E8;
+            border-left: 4px solid #4CAF50;
+        }
+        .section-foods-3 {
+            background: #E3F2FD;
+            border-left: 4px solid #2196F3;
+        }
+        .food-badge {
+            background: white;
+            padding: 8px 12px;
+            margin: 5px;
+            border-radius: 20px;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 14px;
+            border: 2px solid;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .badge-1 { border-color: #FF9800; }
+        .badge-2 { border-color: #4CAF50; }
+        .badge-3 { border-color: #2196F3; }
+        
+        .section-info {
+            display: none;
+            padding: 25px;
+            background: #f8fdf8;
+            border-radius: 12px;
+            margin-top: 15px;
+            border-left: 6px solid;
+            animation: fadeIn 0.5s ease;
+        }
+        .section-info.active {
+            display: block;
+        }
+        
+        .info-1 { border-left-color: #FF9800; background: #FFF3E0; }
+        .info-2 { border-left-color: #4CAF50; background: #E8F5E8; }
+        .info-3 { border-left-color: #2196F3; background: #E3F2FD; }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .recommendation {
+            background: rgba(255,255,255,0.9);
+            padding: 18px;
+            border-radius: 10px;
+            margin: 18px 0;
+            font-weight: bold;
+            font-size: 16px;
+            border: 2px solid;
+        }
+        .rec-1 { border-color: #FF9800; }
+        .rec-2 { border-color: #4CAF50; }
+        .rec-3 { border-color: #2196F3; }
+        
+        .examples {
+            background: rgba(255,255,255,0.8);
+            padding: 15px;
+            border-radius: 8px;
+            margin: 12px 0;
+            font-size: 15px;
+        }
+        
+        .benefits-list {
+            margin: 18px 0;
+            padding-left: 25px;
+        }
+        .benefits-list li {
+            margin: 10px 0;
+            font-size: 15px;
+        }
+        
+        .interactive-area {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            margin-top: 20px;
+        }
+        
+        .results {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            margin-top: 20px;
+            text-align: center;
+            display: none;
+            border: 3px solid #4CAF50;
+        }
+        .correct {
+            background-color: #E8F5E8 !important;
+            border: 3px solid #4CAF50 !important;
+            transform: scale(1.05);
+        }
+        .incorrect {
+            background-color: #FFEBEE !important;
+            border: 3px solid #F44336 !important;
+        }
+        .drag-over {
+            background-color: #f0f0f0 !important;
+            border: 3px dashed #2196F3 !important;
+        }
+        
+        @media (max-width: 768px) {
+            .main-content {
+                grid-template-columns: 1fr;
+            }
+            .plate-graphic {
+                width: 300px;
+                height: 300px;
+            }
+            .food-items {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .placed-foods-list {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🍽️ Plato del Bien Comer Interactivo</h1>
+            <p>Haz clic en cada sección del plato para conocer sus características y arrastra los alimentos a donde creas que pertenecen</p>
+            <a href="index.html" class="btn">🏠 Volver a Inicio</a>
+            <button id="check-btn" class="btn">✅ Verificar Respuestas</button>
+            <button id="reset-btn" class="btn btn-reset">🔄 Reiniciar Actividad</button>
+        </header>
+
+        <div class="main-content">
+            <div class="plate-visual">
+                <h2>Plato del Bien Comer</h2>
+                <p>Proporciones recomendadas para una alimentación balanceada</p>
+                
+                <div class="plate-graphic">
+                    <div class="plate-section section-1" data-section="1">
+                        <div class="section-content">
+                            🍎 Frutas y Verduras<br>
+                            <small>50% del plato</small>
+                        </div>
+                    </div>
+                    <div class="plate-section section-2" data-section="2">
+                        <div class="section-content">
+                            🍞 Cereales<br>
+                            <small>25% del plato</small>
+                        </div>
+                    </div>
+                    <div class="plate-section section-3" data-section="3">
+                        <div class="section-content">
+                            🥩 Proteínas<br>
+                            <small>25% del plato</small>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="plate-legend">
+                    <p><strong>🎯 Proporciones del Plato:</strong></p>
+                    <p>• <span style="color: #FF9800; font-weight: bold;">Naranja:</span> Frutas y Verduras (50%)</p>
+                    <p>• <span style="color: #4CAF50; font-weight: bold;">Verde:</span> Cereales y Tubérculos (25%)</p>
+                    <p>• <span style="color: #2196F3; font-weight: bold;">Azul:</span> Leguminosas y Proteínas (25%)</p>
+                </div>
+            </div>
+
+            <div class="info-panel">
+                <h2>📋 Información de la Sección</h2>
+                <p>Selecciona una sección del plato para ver información detallada.</p>
+                
+                <div id="section-info-1" class="section-info info-1 active">
+                    <h3>🍎 Frutas y Verduras</h3>
+                    <div class="recommendation rec-1">
+                        <strong>Recomendación:</strong> 50% de tu plato - 5 porciones al día
+                    </div>
+                    <p><strong>Importancia:</strong> Base de una alimentación saludable, ricas en vitaminas, minerales y fibra.</p>
+                    
+                    <div class="examples">
+                        <strong>🥗 Ejemplos:</strong><br>
+                        🍎 Manzanas, 🍌 Plátanos, 🍊 Naranjas, 🥕 Zanahorias, 🥦 Brócoli, 🍅 Tomates, 🥬 Espinacas, 🥑 Aguacate, 🍓 Fresas
+                    </div>
+                    
+                    <p><strong>💪 Beneficios:</strong></p>
+                    <ul class="benefits-list">
+                        <li>✅ Alto contenido de vitaminas y minerales</li>
+                        <li>✅ Fuente de fibra dietética</li>
+                        <li>✅ Antioxidantes naturales</li>
+                        <li>✅ Bajo contenido calórico</li>
+                        <li>✅ Mejoran la digestión</li>
+                        <li>✅ Previenen enfermedades crónicas</li>
+                    </ul>
+                </div>
+                
+                <div id="section-info-2" class="section-info info-2">
+                    <h3>🍞 Cereales, Granos y Tubérculos</h3>
+                    <div class="recommendation rec-2">
+                        <strong>Recomendación:</strong> 25% de tu plato - Preferir integrales
+                    </div>
+                    <p><strong>Importancia:</strong> Principal fuente de energía a través de carbohidratos complejos.</p>
+                    
+                    <div class="examples">
+                        <strong>🌾 Ejemplos:</strong><br>
+                        🍚 Arroz integral, 🌽 Maíz, 🍞 Pan integral, 🥔 Papa, 🍠 Camote, 🌾 Avena, 🫘 Frijol, 🌰 Lentejas, 🥖 Tortilla
+                    </div>
+                    
+                    <p><strong>💪 Beneficios:</strong></p>
+                    <ul class="benefits-list">
+                        <li>✅ Energía de liberación prolongada</li>
+                        <li>✅ Fuente de fibra dietética</li>
+                        <li>✅ Vitaminas del complejo B</li>
+                        <li>✅ Minerales esenciales</li>
+                        <li>✅ Saciedad prolongada</li>
+                        <li>✅ Ayudan al funcionamiento intestinal</li>
+                    </ul>
+                </div>
+                
+                <div id="section-info-3" class="section-info info-3">
+                    <h3>🥩 Leguminosas y Alimentos de Origen Animal</h3>
+                    <div class="recommendation rec-3">
+                        <strong>Recomendación:</strong> 25% de tu plato - Variar entre fuentes
+                    </div>
+                    <p><strong>Importancia:</strong> Fuentes de proteínas para construcción y reparación de tejidos.</p>
+                    
+                    <div class="examples">
+                        <strong>🍗 Ejemplos:</strong><br>
+                        🍗 Pollo, 🥩 Carne de res, 🐟 Pescado, 🐖 Cerdo, 🥚 Huevo, 🫘 Lentejas, 🧀 Queso, 🥛 Yogur, 🐐 Carnero
+                    </div>
+                    
+                    <p><strong>💪 Beneficios:</strong></p>
+                    <ul class="benefits-list">
+                        <li>✅ Construcción y reparación muscular</li>
+                        <li>✅ Fuente de hierro y zinc</li>
+                        <li>✅ Aminoácidos esenciales</li>
+                        <li>✅ Saciedad y control del apetito</li>
+                        <li>✅ Función inmunológica</li>
+                        <li>✅ Desarrollo cerebral</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- LISTA DE ALIMENTOS COLOCADOS -->
+        <div class="placed-foods-container">
+            <h2>📝 Alimentos Colocados en el Plato</h2>
+            <div class="placed-foods-list">
+                <div class="section-foods section-foods-1">
+                    <h3>🍎 Frutas y Verduras</h3>
+                    <div id="foods-section-1" class="foods-container">
+                        <div class="empty-message">Aún no hay alimentos aquí</div>
+                    </div>
+                </div>
+                <div class="section-foods section-foods-2">
+                    <h3>🍞 Cereales</h3>
+                    <div id="foods-section-2" class="foods-container">
+                        <div class="empty-message">Aún no hay alimentos aquí</div>
+                    </div>
+                </div>
+                <div class="section-foods section-foods-3">
+                    <h3>🥩 Proteínas</h3>
+                    <div id="foods-section-3" class="foods-container">
+                        <div class="empty-message">Aún no hay alimentos aquí</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="interactive-area">
+            <h2>🔄 Actividad Interactiva: Clasifica los Alimentos</h2>
+            <p>Arrastra cada alimento a la sección del plato donde crees que pertenece</p>
+            
+            <div class="food-items">
+                <!-- Frutas y Verduras -->
+                <div class="food-item" draggable="true" data-correct="1">
+                    <div class="food-icon">🍎</div>
+                    <span class="food-name">Manzana</span>
+                </div>
+                <div class="food-item" draggable="true" data-correct="1">
+                    <div class="food-icon">🥕</div>
+                    <span class="food-name">Zanahoria</span>
+                </div>
+                <div class="food-item" draggable="true" data-correct="1">
+                    <div class="food-icon">🥦</div>
+                    <span class="food-name">Brócoli</span>
+                </div>
+                <div class="food-item" draggable="true" data-correct="1">
+                    <div class="food-icon">🍌</div>
+                    <span class="food-name">Plátano</span>
+                </div>
+                <div class="food-item" draggable="true" data-correct="1">
+                    <div class="food-icon">🍅</div>
+                    <span class="food-name">Tomate</span>
+                </div>
+                <div class="food-item" draggable="true" data-correct="1">
+                    <div class="food-icon">🥬</div>
+                    <span class="food-name">Lechuga</span>
+                </div>
+                
+                <!-- Cereales -->
+                <div class="food-item" draggable="true" data-correct="2">
+                    <div class="food-icon">🍞</div>
+                    <span class="food-name">Pan integral</span>
+                </div>
+                <div class="food-item" draggable="true" data-correct="2">
+                    <div class="food-icon">🍚</div>
+                    <span class="food-name">Arroz integral</span>
+                </div>
+                <div class="food-item" draggable="true" data-correct="2">
+                    <div class="food-icon">🥔</div>
+                    <span class="food-name">Papa</span>
+                </div>
+                <div class="food-item" draggable="true" data-correct="2">
+                    <div class="food-icon">🌽</div>
+                    <span class="food-name">Maíz</span>
+                </div>
+                <div class="food-item" draggable="true" data-correct="2">
+                    <div class="food-icon">🍠</div>
+                    <span class="food-name">Camote</span>
+                </div>
+                <div class="food-item" draggable="true" data-correct="2">
+                    <div class="food-icon">🥖</div>
+                    <span class="food-name">Tortilla</span>
+                </div>
+                
+                <!-- Proteínas -->
+                <div class="food-item" draggable="true" data-correct="3">
+                    <div class="food-icon">🫘</div>
+                    <span class="food-name">Frijoles</span>
+                </div>
+                <div class="food-item" draggable="true" data-correct="3">
+                    <div class="food-icon">🍗</div>
+                    <span class="food-name">Pollo</span>
+                </div>
+                <div class="food-item" draggable="true" data-correct="3">
+                    <div class="food-icon">🥩</div>
+                    <span class="food-name">Carne de res</span>
+                </div>
+                <div class="food-item" draggable="true" data-correct="3">
+                    <div class="food-icon">🐟</div>
+                    <span class="food-name">Pescado</span>
+                </div>
+                <div class="food-item" draggable="true" data-correct="3">
+                    <div class="food-icon">🥚</div>
+                    <span class="food-name">Huevo</span>
+                </div>
+                <div class="food-item" draggable="true" data-correct="3">
+                    <div class="food-icon">🐐</div>
+                    <span class="food-name">Carnero</span>
+                </div>
+            </div>
+        </div>
+
+        <div id="results" class="results"></div>
+    </div>
+
+    <script>
+        // Section interaction
+        const plateSections = document.querySelectorAll('.plate-section');
+        const sectionInfos = document.querySelectorAll('.section-info');
+        
+        plateSections.forEach(section => {
+            section.addEventListener('click', () => {
+                // Remove active class from all info panels
+                sectionInfos.forEach(info => {
+                    info.classList.remove('active');
+                });
+                
+                // Add active class to selected info panel
+                const sectionNumber = section.getAttribute('data-section');
+                const infoPanel = document.getElementById(`section-info-${sectionNumber}`);
+                infoPanel.classList.add('active');
+                
+                // Add visual feedback to plate sections
+                plateSections.forEach(sec => sec.style.opacity = '0.8');
+                section.style.opacity = '1';
+                section.style.zIndex = '10';
+            });
+        });
+
+        // Track placed foods
+        const placedFoods = {
+            1: [], // Frutas y Verduras
+            2: [], // Cereales
+            3: []  // Proteínas
+        };
+
+        // Function to update placed foods list
+        function updatePlacedFoodsList() {
+            // Clear all sections
+            for (let i = 1; i <= 3; i++) {
+                const container = document.getElementById(`foods-section-${i}`);
+                container.innerHTML = '';
+                
+                if (placedFoods[i].length === 0) {
+                    container.innerHTML = '<div class="empty-message">Aún no hay alimentos aquí</div>';
+                } else {
+                    placedFoods[i].forEach(food => {
+                        const badge = document.createElement('div');
+                        badge.className = `food-badge badge-${i}`;
+                        badge.innerHTML = `${food.icon} ${food.name}`;
+                        container.appendChild(badge);
+                    });
+                }
+            }
+        }
+
+        // Drag and drop functionality
+        const foodItems = document.querySelectorAll('.food-item');
+        const checkBtn = document.getElementById('check-btn');
+        const resetBtn = document.getElementById('reset-btn');
+        const resultsDiv = document.getElementById('results');
+        const interactiveSections = document.querySelectorAll('.plate-section');
+        const originalFoodContainer = document.querySelector('.food-items');
+
+        // Store original positions
+        const originalPositions = new Map();
+        foodItems.forEach(item => {
+            originalPositions.set(item.textContent.trim(), {
+                parent: item.parentNode,
+                icon: item.querySelector('.food-icon').textContent,
+                name: item.querySelector('.food-name').textContent
+            });
+        });
+
+        foodItems.forEach(item => {
+            item.addEventListener('dragstart', (e) => {
+                e.dataTransfer.setData('text/plain', item.textContent);
+                item.classList.add('dragging');
+            });
+
+            item.addEventListener('dragend', () => {
+                item.classList.remove('dragging');
+            });
+        });
+
+        interactiveSections.forEach(section => {
+            section.addEventListener('dragover', (e) => {
+                e.preventDefault();
+                section.classList.add('drag-over');
+            });
+
+            section.addEventListener('dragleave', () => {
+                section.classList.remove('drag-over');
+            });
+
+            section.addEventListener('drop', (e) => {
+                e.preventDefault();
+                section.classList.remove('drag-over');
+                
+                const data = e.dataTransfer.getData('text/plain');
+                let draggedItem = null;
+                
+                foodItems.forEach(item => {
+                    if (item.textContent.includes(data.trim())) {
+                        draggedItem = item;
+                    }
+                });
+                
+                if (draggedItem) {
+                    const sectionNumber = parseInt(section.getAttribute('data-section'));
+                    const foodName = draggedItem.querySelector('.food-name').textContent;
+                    const foodIcon = draggedItem.querySelector('.food-icon').textContent;
+                    
+                    // Remove from previous section if it was placed
+                    const previousSection = draggedItem.getAttribute('data-placed');
+                    if (previousSection) {
+                        const index = placedFoods[previousSection].findIndex(food => food.name === foodName);
+                        if (index > -1) {
+                            placedFoods[previousSection].splice(index, 1);
+                        }
+                    }
+                    
+                    // Add to new section
+                    placedFoods[sectionNumber].push({
+                        name: foodName,
+                        icon: foodIcon
+                    });
+                    
+                    // Update the list
+                    updatePlacedFoodsList();
+                    
+                    // Remove any existing classes
+                    draggedItem.classList.remove('correct', 'incorrect');
+                    
+                    // Add to section with visual feedback
+                    section.appendChild(draggedItem);
+                    draggedItem.setAttribute('data-placed', sectionNumber);
+                    draggedItem.style.margin = '8px';
+                    draggedItem.style.width = '85%';
+                    draggedItem.style.transform = 'scale(1.1)';
+                    
+                    // Show visual feedback
+                    setTimeout(() => {
+                        draggedItem.style.transform = 'scale(1)';
+                    }, 300);
+                }
+            });
+        });
+
+        // Check answers
+        checkBtn.addEventListener('click', () => {
+            let correctCount = 0;
+            let totalCount = 0;
+            
+            foodItems.forEach(item => {
+                if (item.getAttribute('data-placed')) {
+                    totalCount++;
+                    const placedSection = parseInt(item.getAttribute('data-placed'));
+                    const correctSection = parseInt(item.getAttribute('data-correct'));
+                    
+                    if (placedSection === correctSection) {
+                        item.classList.add('correct');
+                        item.classList.remove('incorrect');
+                        correctCount++;
+                    } else {
+                        item.classList.add('incorrect');
+                        item.classList.remove('correct');
+                    }
+                }
+            });
+            
+            resultsDiv.style.display = 'block';
+            if (totalCount === foodItems.length) {
+                resultsDiv.innerHTML = `<h3>📊 Resultados: ${correctCount} de ${totalCount} correctos</h3>`;
+                
+                if (correctCount === totalCount) {
+                    resultsDiv.innerHTML += '<div style="background: #E8F5E8; padding: 15px; border-radius: 10px; margin: 10px 0;">';
+                    resultsDiv.innerHTML += '<p style="font-size: 24px;">🎉 ¡Excelente! Todas las respuestas son correctas.</p>';
+                    resultsDiv.innerHTML += '<p>✅ Has comprendido perfectamente el Plato del Bien Comer</p>';
+                    resultsDiv.innerHTML += '</div>';
+                } else {
+                    resultsDiv.innerHTML += '<div style="background: #FFF3E0; padding: 15px; border-radius: 10px; margin: 10px 0;">';
+                    resultsDiv.innerHTML += '<p style="font-size: 20px;">📝 Algunas respuestas necesitan revisión. Intenta nuevamente.</p>';
+                    resultsDiv.innerHTML += '<p>💡 Recuerda: Frutas/Verduras (50%), Cereales (25%), Proteínas (25%)</p>';
+                    resultsDiv.innerHTML += '</div>';
+                }
+            } else {
+                resultsDiv.innerHTML = '<div style="background: #FFEBEE; padding: 15px; border-radius: 10px;">';
+                resultsDiv.innerHTML += '<p>⚠️ Por favor, coloca todos los alimentos en el plato antes de verificar.</p>';
+                resultsDiv.innerHTML += `<p>Faltan ${foodItems.length - totalCount} alimentos por colocar.</p>`;
+                resultsDiv.innerHTML += '</div>';
+            }
+        });
+
+        // Reset functionality
+        resetBtn.addEventListener('click', () => {
+            // Reset all food items to original positions
+            foodItems.forEach(item => {
+                item.classList.remove('correct', 'incorrect', 'dragging');
+                item.removeAttribute('data-placed');
+                item.style.margin = '';
+                item.style.width = '';
+                item.style.transform = '';
+                
+                const originalData = originalPositions.get(item.textContent.trim());
+                if (originalData && originalData.parent.contains !== item) {
+                    originalData.parent.appendChild(item);
+                }
+            });
+            
+            // Clear placed foods
+            placedFoods[1] = [];
+            placedFoods[2] = [];
+            placedFoods[3] = [];
+            updatePlacedFoodsList();
+            
+            // Clear results
+            resultsDiv.style.display = 'none';
+            resultsDiv.innerHTML = '';
+            
+            // Reset plate sections visual
+            plateSections.forEach(section => {
+                section.style.opacity = '0.9';
+            });
+            plateSections[0].style.opacity = '1';
+        });
+
+        // Initialize first section as active
+        plateSections[0].style.opacity = '1';
+        
+        // Initialize placed foods list
+        updatePlacedFoodsList();
+    </script>
+</body>
+</html>
